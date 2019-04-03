@@ -1,0 +1,9 @@
+<%
+    formatSummary = (content, maxLength = 150)=>{
+        if (maxLength >= content.length - 8 ) {
+            return content;
+        }
+        let str =  content.replace(/(<([^>]+)>)/igm,"");
+        return str.substr(0, str.indexOf(" ", maxLength)) + ' ...';
+    }
+%>

@@ -1,0 +1,104 @@
+<%
+    const colection = "article";
+    const linkPrefix = systemConfig.prefixAdmin + `/${colection}/`;
+    const folderUpload  = 'uploads/articles/';
+%>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Book: <%=item.name%>
+            </div>
+            <div class="panel-body">
+                <% include ./../../elements/errors%>
+                <%- %>
+                <div class="row">
+
+                   <% if(item.moreImage != 'undefined' && item.moreImage.length < 3) { %>
+                        <div class="col-sm-12">
+                            <label>More Image (maxFiles = 3 | maxFileSize: 5MB )</label>
+                            <form  action="<%=linkPrefix%>file-upload" name="moreImage" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
+                                <div class="fallback">
+                                    <input name="file" type="file"/>
+                                </div>
+                                <input class="form-control" name="imageOld" value="" type="hidden">
+                                <input class="form-control" name="id" value="<%=item.id%>" type="hidden">
+                            </form>
+                        </div>
+                    <%} else { %>
+                        <div class="col-sm-12">
+                            <div class="alert alert-success">Do số hình lớn hơn hoặc bằng 3 nên không được upload thêm(Xoá để upload thêm)</div>
+                        </div>
+                    <%}%>
+                    <% if(item.moreImage != 'undefined' && item.moreImage.length > 0) { %>
+                        <div class="col-sm-12">
+                            <label>Table Image</label>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center" width="10%">#</th>
+                                    <th style="text-align: center" width="30%">Image</th>
+                                    <th style="text-align: center" width="30%">Image Name</th>
+                                    <th style="text-align: center" width="15%">Action</th>
+                                    <th style="text-align: center" width="15%">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <% item.moreImage.forEach((ele, index) => { %>
+                                        <tr>
+                                            <td><%=index + 1%></td>
+                                            <td style="text-align: center" ><img width="150px" src="<%=folderUpload + 'moreImage/' + ele%>" class="img-responsive" alt=""></td>
+                                            <td style="text-align: center"><%=ele%></td>
+                                            <td style="text-align: center">
+                                                <% if(typeof item.pdf === 'undefined') { %>
+                                                    <a href="<%=linkPrefix + 'deleteImage/' + ele + '/' + item.id + '/no-pdf.pdf'%>"  class="btn btn-danger btn-xs btn-delete">Delete</a>
+                                                <%} else { %>
+                                                    <a href="<%=linkPrefix + 'deleteImage/' + ele + '/' + item.id + '/' + item.pdf%>" class="btn btn-danger btn-xs btn-delete">Delete</a>
+                                                <%}%>
+                                            </td>
+                                            <td style="text-align: center">
+                                                <a href="<%=linkPrefix + 'dowloadImage/' + ele%>" class="btn btn-success btn-xs">Dowload</a>
+                                            </td>
+                                        </tr>
+                                    <%})%>
+                                </tbody>
+                            </table>
+                        </div>
+                    <%}%>
+
+                    <div class="col-lg-12">
+                        <form role="form" action="<%= linkPrefix%>upload-pdf/save" method="POST" enctype="multipart/form-data">
+                                <input class="form-control" name="id" value="<%= item.id%>" type="hidden">
+                               <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>File Demo PDF (requied PDF | size < 4MB)</label>
+                                        <input class="form-control" name="pdf-demo" type="file">
+                                    </div>
+                                </div>
+                                <div style="margin-top: 24px;" class="col-sm-6">
+
+                                    <button type="submit" class="btn btn-primary">Submit </button>
+                                    <a type="button" href="<%= linkPrefix%>" class="btn btn-default">Cancel</a>
+                                </div>
+                               </div>
+                                <div style="margin-top: 24px;"  class="col-sm-12">
+                                    <% if(item.pdf == 'no-pdf.pdf') { %>
+                                        <% include ./../../helpers/image%>
+                                        <%- imageHelper('/uploads/pdf-demo/web/', '', undefined, 'no-pdf.png')%>
+                                        <input class="form-control" name="imageOld" value="" type="hidden">
+                                   <%} else { %>
+                                         <iframe src="/uploads/pdf-demo/web/viewer.html?file=<%=item.pdf%>" style="height: 800px" class="col-xs-12" frameborder="0"></iframe>
+                                        <input class="form-control" name="imageOld" value="<%=item.pdf%>" type="hidden">
+                                   <%}%>
+                                </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

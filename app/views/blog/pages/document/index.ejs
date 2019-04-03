@@ -1,0 +1,233 @@
+<%
+const folderUpload  = '/uploads/documents/';
+%>
+<% include ./../../helpers/format_time%>
+<% include ./../../helpers/format_summary%>
+<% include ./../../helpers/pagination%>
+<div class="breadcrumb">
+    <div class="container">
+        <a class="breadcrumb-item" href="/">Trang Chủ</a>
+        <span class="breadcrumb-item active">Tài Liệu</span>
+    </div>
+</div>
+<link rel="stylesheet" href="/frontend/css/document.css">
+<section class="banner-sec">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-3">
+                <% if(itemsSpecial.length > 1) {%>
+                    <% for(let i = 0; i< 2; i++) {%>
+                        <div class="card">
+                            <a href="/tai-lieu/xem-tai-lieu/<%=itemsSpecial[i].id + '/' + itemsSpecial[i].slug%>">
+                                <img style="height: 160px!important" class="img-fluid" src="<%=folderUpload + itemsSpecial[i].thumb%>" alt="">
+                            </a>
+                            <div class="card-img-overlay"> <span class="badge badge-pill badge-danger"><%=itemsSpecial[i].category.name%></span> </div>
+                            <div class="card-body">
+                                <div class="news-title">
+                                    <h2 class=" title-small"><a href="/tai-lieu/xem-tai-lieu/<%=itemsSpecial[i].id + '/' + itemsSpecial[i].slug%>"><%= formatSummary(itemsSpecial[i].name, 60)%></a></h2>
+                                </div>
+                                <p class="card-text"><small class="text-time"><em><%= formatTime(itemsSpecial[i].created.time)%></em></small></p>
+                            </div>
+                        </div>
+                    <%}%>
+                <%}%>
+
+            </div>
+            <div class="col-md-3">
+                <% if(itemsSpecial.length > 3) {%>
+                    <% for(let i = 2; i< 4; i++) {%>
+                        <div class="card">
+                            <a href="/tai-lieu/xem-tai-lieu/<%=itemsSpecial[i].id + '/' + itemsSpecial[i].slug%>">
+                                <img style="height: 160px!important" class="img-fluid" src="<%=folderUpload + itemsSpecial[i].thumb%>" alt="">
+                            </a>
+                            <div class="card-img-overlay"> <span class="badge badge-pill badge-danger"><%=itemsSpecial[i].category.name%></span> </div>
+                            <div class="card-body">
+                                <div class="news-title">
+                                    <h2 class=" title-small"><a href="/tai-lieu/xem-tai-lieu/<%=itemsSpecial[i].id + '/' + itemsSpecial[i].slug%>"><%= formatSummary(itemsSpecial[i].name, 60)%></a></h2>
+                                </div>
+                                <p class="card-text"><small class="text-time"><em><%= formatTime(itemsSpecial[i].created.time)%></em></small></p>
+                            </div>
+                        </div>
+                    <%}%>
+                <%}%>
+            </div>
+            <div class="col-md-6 top-slider">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"  class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <% if(itemsSpecial.length > 6) {%>
+                            <% for(let i = 4; i< 7; i++) {%>
+                                <%if(i==5) {%>
+                                    <div class="carousel-item active">
+                                <%} else {%>
+                                     <div class="carousel-item">
+                                 <%}%>
+                                    <div class="news-block">
+                                        <div class="news-media">
+                                            <a href="/tai-lieu/xem-tai-lieu/<%=itemsSpecial[i].id + '/' + itemsSpecial[i].slug%>">
+                                                <img class="img-fluid" src="<%=folderUpload + itemsSpecial[i].thumb%>" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="news-title">
+                                            <h2 class=" title-large"><a href="/tai-lieu/xem-tai-lieu/<%=itemsSpecial[i].id + '/' + itemsSpecial[i].slug%>"><%=itemsSpecial[i].name%></a></h2>
+                                        </div>
+                                        <div class="news-des"><%- formatSummary(itemsSpecial[i].content, 300)%></div>
+                                        <div class="time-text"><strong><%= formatTime(itemsSpecial[i].created.time)%></strong></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            <%}%>
+                        <%}%>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-01">
+    <div class="container">
+        <div class="row">
+            <%if(params.keyword != ''){%>
+                <div class="col-md-8">
+                    <div class="alert alert-success">Từ khoá '<%=params.keyword%>'</div>
+                </div>
+            <%}%>
+            <div class="col-lg-8 col-md-12">
+                <div class="heading-large row" >
+                    <h3 class="col-md-6" >Tất cả bài viết</h3>
+                    <form action="/tai-lieu/tim-kiem" method="post" class="col-md-6">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" placeholder="Enter keyword ..." name="keyword">
+                            <div  class="input-group-append">
+                                <button style="padding: 0px 18px" class="btn btn-outline-secondary" type="submit">Tìm Kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="">
+                    <%if(itemsAll.length > 0) {%>
+                        <% itemsAll.forEach((item) => {%>
+                            <div class="col-lg-6 card">
+                                <div class="card" style="border: 1px solid #d5d5d5;">
+                                    <a href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>">
+                                        <img style="border-radius: 5px 5px 0px 0px; height: 190px!important;" class="img-fluid" style="height: 220px!important;" src="<%=folderUpload + '/' + item.thumb%>" alt="<%=item.name%>">
+                                    </a>
+                                    <div class="card-body" style="height: 180px;">
+                                        <div class="news-title">
+                                            <a href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>">
+                                                <h2 style="font-weight: bold;"  class=" title-small"><%=item.name%></h2>
+                                            </a>
+                                        </div>
+                                        <p class="card-text"><%- formatSummary(item.content, 100)%></p>
+                                        <p class="card-text"><small class="text-time"><em><%= formatTime(item.created.time)%></em></small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <%})%>
+                    <%} else {%>
+                         <div class="col-sm-12 alert alert-danger ">Đang cập nhật cơ sở dữ liệu</div>
+                    <%}%>
+
+                </div>
+            </div>
+            <aside class="col-lg-4 side-bar col-md-12">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Mới nhất</a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Xem nhiều</a> </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content sidebar-tabing" id="nav-tabContent">
+                    <div class="tab-pane active" id="home" role="tabpanel">
+                        <%if(itemNews.length > 0){%>
+                            <%itemNews.forEach((item) => {%>
+                                <div class="media" style="background-color: #F5F5F5; border-radius: 5px;border: 1px solid #d5d5d5;"> <a href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>">
+                                        <img class="d-flex mr-3" style="height: 180px!important; width: 180px;border-radius: 5px 0px 0px 5px" src="<%=folderUpload + '/' + item.thumb%>" alt="<%=item.name%>"></a>
+                                    <div class="media-body">
+                                        <div class="news-title">
+                                            <h2 class="title-small"><a style="text-align: justify; font-size: 13px;  font-weight: bold" href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>"><%=item.name%></a></h2>
+                                        </div>
+                                        <div class="news-auther"><span class="time"><%= formatTime(item.created.time)%></span></div>
+                                    </div>
+                                </div>
+                            <%})%>
+                        <%}%>
+
+                    </div>
+                    <div class="tab-pane" id="profile" role="tabpanel">
+                        <%if(itemTopsViews.length > 0){%>
+                            <%itemTopsViews.forEach((item) => {%>
+                                <div class="media" style="background-color: #F5F5F5; border-radius: 5px;border: 1px solid #d5d5d5;"> <a href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>">
+                                        <img class="d-flex mr-3" style="height: 180px!important; width: 180px;border-radius: 5px 0px 0px 5px" src="<%=folderUpload + '/' + item.thumb%>" alt="<%=item.name%>"></a>
+                                    <div class="media-body">
+                                        <div class="news-title">
+                                            <h2 class="title-small"><a style="text-align: justify; font-size: 13px; font-weight: bold" href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>"><%=item.name%></a></h2>
+                                        </div>
+                                        <div class="news-auther"><span class="time"><%= formatTime(item.created.time)%></span></div>
+                                    </div>
+                                </div>
+                            <%})%>
+                        <%}%>
+
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+        <div class="d-flex justify-content-center " >
+            <%- paginationHelper(params.pagination,``, '', '')%>
+        </div>
+    </div>
+</section>
+<section class="recomended-sec">
+    <div class="container">
+        <div class="title">
+            <h2>Sách Bán Chạy Nhất</h2>
+            <hr>
+        </div>
+        <div class="row">
+            <% booksSpecial.forEach((item) => { %>
+            <div class="col-lg-3 col-md-6">
+                <div class="item" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !">
+                    <img height="300px" width="210px" src="<%='/uploads/articles/' + item.thumb%>" alt="img">
+                    <h5>
+                        <% include ./../../helpers/format_summary%>
+                        <%=formatSummary(item.name, 40)%>
+                    </h5>
+                    <h6>
+                            <span class="price">
+                                <% include ./../../../admin/helpers/currency%>
+                                Giá Sách:  <%=Currency(item.coverprice)%>
+                            </span>
+                        <% if(item.price < item.coverprice) { %>
+                        <span class="sale">-<%=100 - Math.floor(item.price *100 / item.coverprice)%>%</span>
+                        <%}%>
+                    </h6>
+                    <div class="hover">
+                        <a href="/xem-sach/<%=item.slug + '/' + item.id%>">
+
+
+                        </a>
+                    </div>
+                </div>
+                <div style="margin-top: 10px" class="btn-sec">
+                    <a href="https://www.facebook.com/ngankieu0905">
+                        <button class="btn "><i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt Sách</button>
+                    </a>
+                </div>
+            </div>
+            <% })%>
+        </div>
+    </div>
+</section>

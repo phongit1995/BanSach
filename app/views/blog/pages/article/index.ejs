@@ -1,0 +1,141 @@
+<%
+const folderUpload  = './../../../uploads/articles/';
+%>
+<div class="breadcrumb">
+    <div class="container">
+        <a class="breadcrumb-item" href="index.html">Home</a>
+        <span class="breadcrumb-item active"><%=itemArticle.name%></span>
+    </div>
+</div>
+<section class="product-sec">
+    <div class="container">
+        <h1><%=itemArticle.name%></h1>
+        <div class="row">
+            <div class="col-md-6 slider-sec">
+                <div id="myCarousel" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="active item carousel-item" data-slide-number="0">
+                            <img src="<%=folderUpload + itemArticle.thumb%>" class="img-fluid">
+                        </div>
+
+                        <% if(itemArticle.moreImage.length > 0) { %>
+                            <%itemArticle.moreImage.forEach((item, index) => {%>
+                                <%if(index < 2) { %>
+                                    <div class="item carousel-item" data-slide-number="<%=index+1%>">
+                                        <img src="<%=folderUpload + 'moreImage/' + item%>" class="img-fluid">
+                                    </div>
+                                <%}%>
+                            <%})%>
+                        <% } %>
+                    </div>
+                    <ul class="carousel-indicators list-inline">
+                        <li class="list-inline-item active">
+                            <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#myCarousel">
+                                <img src="<%=folderUpload + itemArticle.thumb%>" class="img-fluid">
+                            </a>
+                        </li>
+                        <% if(itemArticle.moreImage.length > 0) { %>
+                            <%itemArticle.moreImage.forEach((item, index) => {%>
+                                <%if(index < 2) { %>
+                                    <li class="list-inline-item">
+                                        <a id="carousel-selector-1" data-slide-to="<%=index+1%>" data-target="#myCarousel">
+                                            <img src="<%=folderUpload + 'moreImage/' + item%>" class="img-fluid">
+                                        </a>
+                                    </li>
+                                <%}%>
+                            <%})%>
+                        <% } %>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 slider-content">
+                <p><%-itemArticle.content%></p>
+                <ul>
+                    <% include ./../../../admin/helpers/currency%>
+                    <li style="width: 500px">
+                        <span class="name">Tác giả</span><span class="clm" >:</span>
+                        <span  class="price" style="text-decoration: none; width: 200px"><%=itemArticle.author%></span>
+                    </li>
+                    <li>
+                        <span class="name">Số trang</span><span class="clm" >:</span>
+                        <span class="price" style="text-decoration: none"><%=itemArticle.pages%></span>
+                    </li>
+                    <li>
+                        <span class="name">Giá bìa</span><span class="clm" style="text-decoration: none">:</span>
+                        <span class="price"><%=Currency(itemArticle.coverprice)%></span>
+                    </li>
+                    <li>
+                        <span class="name">Giá bán</span><span class="clm">:</span>
+                        <span class="price final"><%=Currency(itemArticle.price)%></span>
+                    </li>
+                    <li>
+                        <span class="save-cost">Tiết kiệm <%=Currency((parseInt(itemArticle.coverprice)  -  parseInt(itemArticle.price)) +'')%></span>
+                    </li>
+                </ul>
+                <div class="btn-sec">
+                    <a href="https://www.facebook.com/ngankieu0905">
+                        <button class="btn "><i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt Sách</button>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+<section>
+    <div  class="container col-sm-12">
+        <h2>Bản Đọc Thử</h2>
+        <% if (typeof itemArticle.pdf != 'undefined') { %>
+            <iframe src="/uploads/pdf-demo/web/viewer.html?file=<%=itemArticle.pdf%>" style="height: 800px; width: 100%; margin-top: 40px" class="col-xs-12" frameborder="0"></iframe>
+            <input class="form-control" name="imageOld" value="<%=itemArticle.pdf%>" type="hidden">
+        <%} else {%>
+            <div style="margin-top: 30px" class="col-sm-12 alert alert-success">Tác giả chưa cập nhật bản đọc thử cho cuốn sách này ...</div>
+        <%}%>
+    </div>
+</section>
+<section>
+
+    <div class="container col-md-12">
+        <h2>Bình Luận Về Cuốn Sách Này</h2>
+        <section>
+            <div class="fb-comments" data-href="http://www.dvhbooks.com/xem-sach/<%=itemArticle.slug+'/'+itemArticle.id%>" data-numposts="5" width="730px"></div>
+        </section>
+    </div>
+</section>
+<section class="related-books">
+    <div class="container">
+        <h2 style="margin-top: 40px" >Sách mới xuất bản</h2>
+        <div class="recomended-sec">
+            <div class="row">
+                <% itemsSpecial.forEach((item) => { %>
+                <div class="col-lg-3 col-md-6">
+                    <div class="item">
+                        <img height="300px" width="210px" src="<%=folderUpload + '/' + item.thumb%>" alt="img">
+                        <h5>
+                            <% include ./../../helpers/format_summary%>
+                            <%=formatSummary(item.name, 40)%>
+                        </h5>
+                        <h6>
+                            <span class="price">
+                                <% include ./../../../admin/helpers/currency%>
+                                <%=Currency(item.coverprice)%>
+                            </span> / <a href="/xem-sach/<%=item.slug + '/' + item.id%>">Đặt Sách</a>
+                        </h6>
+                        <div class="hover">
+                            <a href="/xem-sach/<%=item.slug + '/' + item.id%>">
+                            </a>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px" class="btn-sec">
+                        <a href="https://www.facebook.com/ngankieu0905">
+                            <button class="btn "><i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt Sách</button>
+                        </a>
+                    </div>
+                </div>
+                <% })%>
+            </div>
+        </div>
+    </div>
+</section>

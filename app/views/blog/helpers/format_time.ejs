@@ -1,0 +1,22 @@
+<%
+formatTime = (date)=>{
+    let day = Math.floor((new Date().getTime() - date.getTime()) / (1000 *60*60*24));
+    if(day == 0) {
+        let hour = Math.floor((new Date().getTime() - date.getTime()) / (1000 *60*60));
+        if(hour < 1 ) {
+            let min =  Math.floor((new Date().getTime() - date.getTime()) / (1000 *60));
+            if(min < 2) {
+                return 'Vừa Xong';
+            } else {
+                return min + ' Phút Trước';
+            }
+        } else {
+            return hour + ' Giờ Trước';
+        }
+
+    } else if (day == 1) {
+        return 'Hôm Qua';
+    }
+    return day + 'ngày trước';
+}
+%>

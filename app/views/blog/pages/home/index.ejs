@@ -1,0 +1,195 @@
+<%
+    const folderUpload  = 'uploads/articles/'; 
+%>
+<section class="slider">
+    <div  class="container">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ul class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ul>
+            <div class="carousel-inner">
+                <%if(slides.length > 0) { %>
+                    <%slides.forEach((item, index) => {%>
+                        <%if(index == 1 ) { %>
+                            <div class="carousel-item active">
+                        <%} else {%>
+                                <div class="carousel-item">
+                         <%}%>
+                            <img src="uploads/website/<%=item%>" alt="Los Angeles" width="100%"  height="500">
+                        </div>
+                    <%})%>
+                <%} else { %>
+                        <div class="carousel-item active">
+                            <img src="/frontend/images/slide1.jpg" alt="Los Angeles" width="100%"  height="500">
+
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/frontend/images/slide2.jpg" alt="Chicago" width="100%"  height="500">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/frontend/images/slide3.jpg" alt="New York" width="100%" height="500">
+
+                        </div>
+                        </div>
+                 <%}%>
+
+            <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="recomended-sec">
+    <div class="container">
+        <div class="title">
+            <h2>Sách Bán Chạy Nhất</h2>
+            <hr>
+        </div>
+        <div class="row">
+            <% itemsSpecial.forEach((item) => { %>
+                <div class="col-lg-3 col-md-6">
+                    <div class="item" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !">
+                        <img height="300px" width="210px" src="<%=folderUpload + '/' + item.thumb%>" alt="img">
+                        <h5>
+                            <% include ./../../helpers/format_summary%>
+                            <%=formatSummary(item.name, 40)%>
+                        </h5>
+                        <h6>
+                            <span class="price">
+                                <% include ./../../../admin/helpers/currency%>
+                                Giá Sách:  <%=Currency(item.coverprice)%>
+                            </span>
+                            <% if(item.price < item.coverprice) { %>
+                                <span class="sale">-<%=100 - Math.floor(item.price *100 / item.coverprice)%>%</span>
+                            <%}%>
+                        </h6>
+                        <div class="hover">
+                            <a href="/xem-sach/<%=item.slug + '/' + item.id%>">
+                            </a>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px" class="btn-sec">
+                        <a href="https://www.facebook.com/ngankieu0905">
+                            <button class="btn "><i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt Sách</button>
+                        </a>
+                    </div>
+                </div>
+            <% })%>
+        </div>
+    </div>
+</section>
+<section class="recent-book-sec" style="position: relative;">
+    <div class="container" >
+        <div class="title">
+            <h2>DANH MỤC SÁCH</h2>
+            <hr>
+        </div>
+        <div class="row loadmore">
+            <% itemNews.forEach((item) => { %>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                    <div class="item" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !" >
+                        <a href="/xem-sach/<%=item.slug + '/' + item.id%>"><img height="232px" src="<%=folderUpload + '/' + item.thumb%>" alt="img"></a>
+                        <h3 style="text-align: center" ><a  href="/xem-sach/<%=item.slug + '/' + item.id%>"><%=item.name%></a></h3>
+                        <h6 style="text-align: center" ><span   class="price">
+                        <%=Currency(item.coverprice)%>
+                        </span > / <a href="https://www.facebook.com/ngankieu0905">Đặt Sách</a></h6>
+                        <% if(item.price < item.coverprice) { %>
+                            <span class="sale">-<%=100 - Math.floor(item.price *100 / item.coverprice)%>%</span>
+                        <%}%>
+                    </div>
+                </div>
+            <%})%>
+
+        <div  class="btn-sec col-sm-12">
+            <a href="javascript:void(0)" id="loadMoreHomePage" class="btn gray-btn">Xem Thêm</a>
+        </div>
+
+    </div>
+        <img id="loading-image"  style="display: none; z-index: 1001; height: 100px;left: 50%;margin-top: -50px;margin-left: -50px;position: absolute;top: 75%;width: 100px"  src="/frontend/images/loading.gif" alt="Gift Loading Books">
+</section>
+<section class="testimonial-sec">
+    <div class="container">
+        <div id="testimonal" class="owl-carousel owl-theme">
+            <%if(itemNews.length >= 3) {%>
+                <div class="item" >
+                    <div class="row">
+                        <%for(var i = 0; i < 3; i++ ){%>
+                            <div class="col-md-4">
+                                <a href="/xem-sach/<%=itemNews[i].slug + '/' + itemNews[i].id%>"><img height="232px" src="<%=folderUpload + '/' + itemNews[i].thumb%>" alt="<%=itemNews[i].name%>" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !"></a>
+                                <h3>
+                                    <a href="/xem-sach/<%=itemNews[i].slug + '/' + itemNews[i].id%>"><%=itemNews[i].name%></a>
+                                </h3>
+                                <h6>
+                                    <span class="price">
+                                        <%=Currency(itemNews[i].coverprice)%>
+                                    </span> /
+                                    <a href="https://www.facebook.com/ngankieu0905">Đặt Sách</a>
+                                </h6>
+                                <% if(itemNews[i].price < itemNews[i].coverprice) { %>
+                                    <span class="sale">-<%=100 - Math.floor(itemNews[i].price *100 / itemNews[i].coverprice)%>%</span>
+                                <%}%>
+                            </div>
+                        <%}%>
+                    </div>
+                </div>
+            <%}%>
+            <%if(itemNews.length >= 6) {%>
+                <div class="item"  >
+                    <div class="row">
+                        <%for(var i = 3; i < 6; i++ ){%>
+                        <div class="col-md-4">
+                            <img height="232px" src="<%=folderUpload + '/' + itemNews[i].thumb%>" alt="<%=itemNews[i].name%>" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !">
+                            <h3>
+                                <a href="/xem-sach/<%=itemNews[i].slug + '/' + itemNews[i].id%>"><%=itemNews[i].name%></a>
+                            </h3>
+                            <h6>
+                                <span class="price">
+                                     <%=Currency(itemNews[i].coverprice)%>
+                                </span> /
+                                <a href="https://www.facebook.com/ngankieu0905">Đặt Sách</a>
+                            </h6>
+                            <% if(itemNews[i].price < itemNews[i].coverprice) { %>
+                                <span class="sale">-<%=100 - Math.floor(itemNews[i].price *100 / itemNews[i].coverprice)%>%</span>
+                            <%}%>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+            <%}%>
+            <%if(itemNews.length >= 9) {%>
+            <div class="item" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !"> 
+                <div class="row">
+                    <%for(var i = 6; i < 9; i++ ){%>
+                    <div class="col-md-4">
+                        <img height="232px" src="<%=folderUpload + '/' + itemNews[i].thumb%>" alt="img">
+                        <h3>
+                            <a href="/xem-sach/<%=itemNews[i].slug + '/' + itemNews[i].id%>"><%=itemNews[i].name%></a>
+                        </h3>
+                        <h6>
+                            <span class="price">
+                                 <%=Currency(itemNews[i].price)%>
+                            </span> /
+                            <a href="https://www.facebook.com/ngankieu0905">Đặt Sách</a>
+                        </h6>
+                        <% if(itemNews[i].price < itemNews[i].coverprice) { %>
+                            <span class="sale">-<%=100 - Math.floor(itemNews[i].price *100 / itemNews[i].coverprice)%>%</span>
+                        <%}%>
+                    </div>
+                    <%}%>
+                </div>
+            </div>
+            <%}%>
+        </div>
+    </div>
+    <div class="left-quote">
+        <img src="/frontend/images/left-quote.png" alt="quote">
+    </div>
+    <div class="right-quote">
+        <img src="/frontend/images/right-quote.png" alt="quote">
+    </div>
+</section>

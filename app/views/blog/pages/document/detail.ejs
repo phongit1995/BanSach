@@ -1,0 +1,149 @@
+<%
+const folderUpload  = '/uploads/documents/';
+%>
+<% include ./../../helpers/format_time%>
+<% include ./../../helpers/format_summary%>
+<% include ./../../helpers/pagination%>
+<div class="breadcrumb">
+    <div class="container">
+        <a class="breadcrumb-item" href="/">Trang Chủ</a>
+        <a class="breadcrumb-item" href="/tai-lieu">Tài Liệu</a>
+        <span class="breadcrumb-item active"><%= formatSummary(itemSelectedView.name, 20)%></span>
+    </div>
+</div>
+<link rel="stylesheet" href="/frontend/css/document.css">
+<section style="border-top: 0" class="section-01">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12" style="border: 1px solid #ddd; border-radius: 6px; margin-top: 33px;">
+
+                <div class="title-content">
+                    <h1><%=itemSelectedView.name%> </h1>
+                </div>
+                <div class="post-info">
+                    <span class="post-info-user">
+                        <span class="paddingleft5px"><%=itemSelectedView.category.name%></span>
+                    </span>
+                    <span class="post-info-time">
+                        <%= formatTime(itemSelectedView.created.time)%>
+                    </span>
+                    <span class="post-info-view"><%=itemSelectedView.counts%> lượt xem</span>
+                    <span>|</span>
+                    <span class="post-info-category"><a href="/bai-viet"><span></span></a></span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="Chia sẻ lên facebook !" class="float-right"><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.dvhbooks.com/tai-lieu/xem-tai-lieu/<%=itemSelectedView.id+'/'+itemSelectedView.slug%>"><i class="fa fa-facebook-square fa-2x social-fb"></i></a></span>
+                </div>
+                <section >
+                    <img  style="height: 400px!important; width: 100%" class="img-responsive" src="<%=folderUpload + '/' + itemSelectedView.thumb%>" alt="<%=itemSelectedView.name%>">
+                </section>
+                <section >
+                    <%-itemSelectedView.content%>
+                </section>
+                <section>
+                        <h6>Tài Liệu: <%=itemSelectedView.name%></h6>
+                        <% if (typeof itemSelectedView.pdf != 'undefined') { %>
+                            <iframe src="/uploads/pdf-demo/web/viewer.html?file=<%=itemSelectedView.pdf%>" style="height: 800px; width: 100%; margin-top: 40px" class="col-xs-12" frameborder="0"></iframe>
+                            <div class="btn-sec pull-right" style="margin-top: 20px">
+                                <a href="/tai-lieu/dowloadPDF/<%=itemSelectedView.id + '/' +itemSelectedView.pdf%>" class="btn yellow"><i class="fa fa-download fa-2x"></i>&nbsp; Tải Tài Liệu</a>
+                            </div>
+                        <%} else {%>
+                            <div style="margin-top: 30px" class="col-sm-12 alert alert-success">Tác giả chưa cập nhật bản đọc thử cho cuốn sách này ...</div>
+                        <%}%>
+
+                </section>
+
+            </div>
+            <aside class="col-lg-4 side-bar col-md-12">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Mới nhất</a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Xem nhiều</a> </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content sidebar-tabing" id="nav-tabContent">
+                    <div class="tab-pane active" id="home" role="tabpanel">
+                        <%if(itemNews.length > 0){%>
+                        <%itemNews.forEach((item) => {%>
+                        <div class="media"  style="background-color: #F5F5F5; border-radius: 5px;border: 1px solid #d5d5d5;"> <a href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>">
+                                <img class="d-flex mr-3" style="height: 150px!important; width: 150px; border-radius: 5px 0px 0px 5px" src="<%=folderUpload + '/' + item.thumb%>" alt="<%=item.name%>"></a>
+                            <div class="media-body">
+                                <div class="news-title">
+                                    <h2 class="title-small"><a style="text-align: justify; font-size: 14px; font-weight: bold" href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>"><%=item.name%></a></h2>
+                                </div>
+                                <div class="news-auther"><span class="time"><%= formatTime(item.created.time)%></span></div>
+                            </div>
+                        </div>
+                        <%})%>
+                        <%}%>
+
+                    </div>
+                    <div class="tab-pane" id="profile" role="tabpanel">
+                        <%if(itemTopsViews.length > 0){%>
+                        <%itemTopsViews.forEach((item) => {%>
+                        <div class="media" style="background-color: #F5F5F5; border-radius: 5px;border: 1px solid #d5d5d5;"> <a href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>"> <img class="d-flex mr-3" style="height: 150px!important; width: 150px" src="<%=folderUpload + '/' + item.thumb%>" alt="<%=item.name%>"></a>
+                            <div class="media-body">
+                                <div class="news-title">
+                                    <h2 class="title-small"><a style="text-align: justify;  font-size: 14px; font-weight: bold;border-radius: 5px 0px 0px 5px" href="/tai-lieu/xem-tai-lieu/<%=item.id + '/' + item.slug%>"><%=item.name%></a></h2>
+                                </div>
+                                <div class="news-auther"><span class="time"><%= formatTime(item.created.time)%></span></div>
+                            </div>
+                        </div>
+                        <%})%>
+                        <%}%>
+
+                    </div>
+                </div>
+
+            </aside>
+            <div class="col-md-8">
+
+                <section>
+                    <h3>Bình Luận</h3>
+                    <div class="fb-comments" data-href="http://www.dvhbooks.com/tai-lieu/xem-tai-lieu/<%=itemSelectedView.id+'/'+itemSelectedView.slug%>" data-numposts="5" width="730px"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="recomended-sec">
+    <div class="container">
+        <div class="title">
+            <h2>Sách Bán Chạy Nhất</h2>
+            <hr>
+        </div>
+        <div class="row">
+            <% booksSpecial.forEach((item) => { %>
+            <div class="col-lg-3 col-md-6">
+                <div class="item" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !">
+                    <img height="300px" width="210px" src="<%='/uploads/articles/' + item.thumb%>" alt="img">
+                    <h5>
+                        <% include ./../../helpers/format_summary%>
+                        <%=formatSummary(item.name, 40)%>
+                    </h5>
+                    <h6>
+                            <span class="price">
+                                <% include ./../../../admin/helpers/currency%>
+                                Giá Sách:  <%=Currency(item.coverprice)%>
+                            </span>
+                        <% if(item.price < item.coverprice) { %>
+                        <span class="sale">-<%=100 - Math.floor(item.price *100 / item.coverprice)%>%</span>
+                        <%}%>
+                    </h6>
+                    <div class="hover">
+                        <a href="/xem-sach/<%=item.slug + '/' + item.id%>">
+
+
+                        </a>
+                    </div>
+                </div>
+                <div style="margin-top: 10px" class="btn-sec">
+                    <a href="https://www.facebook.com/ngankieu0905">
+                        <button class="btn "><i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt Sách</button>
+                    </a>
+                </div>
+            </div>
+            <% })%>
+        </div>
+    </div>
+</section>
+
+

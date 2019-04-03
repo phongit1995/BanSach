@@ -1,0 +1,85 @@
+<%
+    paginationHelper = (pagination,linkPrefix, curStatus, keyword)=>{
+        let currentPage         = pagination.currentPage;
+        let totalItemsPerPage   = pagination.totalItemsPerPage;
+        let totalItems          = pagination.totalItems;
+        pageRange               = pagination.pageRange;
+        let totalPages = Math.ceil(pagination.totalItems/ pagination.totalItemsPerPage);
+        let to = totalItemsPerPage * currentPage ;
+        let from = to - totalItemsPerPage  + 1;
+        let link                = linkPrefix +'status/' + curStatus;
+        if(keyword !== '') {
+            link += '?keyword='+keyword + '&page=';
+        } else {
+            link += '?page=';
+        }
+        <!-- Pagi -->
+        let xhtmlPagination     = '';
+        let xhtmlStart          = '<li><a>Start</a></li>';
+        let xhtmlPrevious       = '<li ><a>Previous</a></li>';
+        let xhtmlPage           = '';
+        let xhtmlNext           = '<li ><a >Next</a></li>';
+        let xhtmlEnd            = '<li ><a >End</a></li>';
+
+        if(to > totalItems){
+            to = totalItems;
+        }
+        if(totalPages > 1){
+            <!-- Start | Pre -->
+            if(currentPage > 1) {
+                xhtmlStart = `<li><a href ="${link}1">Start</a></li>`;
+                xhtmlPrevious = `<li ><a href ="${link}${currentPage-1}">Previous</a></li>`;
+            }
+            <!-- Next | End -->
+            if(currentPage < totalPages) {
+                xhtmlNext = `<li ><a href ="${link}${currentPage+1}">Next</a></li>`;
+                xhtmlEnd = `<li ><a href ="${link}${totalPages}">End</a></li>`;
+            }
+            <!-- Page -->
+            let min = 1,   max = totalPages;
+            let middle =  Math.ceil(pageRange/2);
+            min = currentPage - middle + 1;
+            max = min + pageRange - 1;
+            if(min <= 1){
+                min = 1;
+                max = pageRange;
+            }
+            if(max >= totalPages) {
+                max =  totalPages;
+                min = (max - pageRange + 1) >= 1 ? (max - pageRange + 1) : 1;
+            }
+        
+
+            for(let i = min; i <= max; i++) {
+                if(currentPage == i){
+                    xhtmlPage +=  `<li class="active" ><a>${i}</a></li>`;
+                } else {
+                    xhtmlPage +=  `<li ><a href ="${link}${i}">${i}</a></li>`;
+                }
+                
+            }
+            xhtmlPagination = '<ul class="pagination text-center">' + xhtmlStart + xhtmlPrevious + xhtmlPage + xhtmlNext + xhtmlEnd+ '</ul>';
+        }
+        
+        
+        
+        return `<div class="panel panel-default" id="pagination">
+                
+                <div class="panel-heading">
+                    Pagination
+                    <span>^</span>
+                    <span class="label label-warning">Total pages: ${totalPages}</span>
+                    <span class="label label-danger">Total entries: ${pagination.totalItems}</span>
+                </div>
+                <div class="panel-body">
+                    <div class="infor-pagination">
+                        <p>Number of entries on the page: <span>${pagination.totalItemsPerPage}</span></p>
+                        <p>Showing <span> ${from} </span> to <span>${to}</span> of <span>${pagination.totalItems}</span> entries</p>
+                    </div>
+                    <div class="ad-pagination">
+                        ${xhtmlPagination}
+                    </div>
+                </div>
+            </div>`
+    }
+%>

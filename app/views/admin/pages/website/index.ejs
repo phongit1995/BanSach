@@ -1,0 +1,65 @@
+<%
+const colection = "website";
+const linkPrefix = systemConfig.prefixAdmin + `/${colection}/`;
+const folderUpload  = 'uploads/website';
+%>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Config your website
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <% if(item != null && item.slides.length <= 5) { %>
+                        <div class="col-sm-12">
+                            <label>More Image (maxFiles = 5 | maxFileSize: 5MB )</label>
+                            <form  action="<%= linkPrefix%>slides-upload" name="moreImage" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
+                                <div class="fallback">
+                                    <input name="file" type="file" multiple />
+                                </div>
+                            </form>
+                        </div>
+                    <%} else { %>
+                        <div class="col-sm-12">
+                            <div class="alert alert-success">Do số hình lớn hơn 5 nên không được upload thêm(Xoá để upload thêm)</div>
+                        </div>
+                    <%}%>
+                    <% if(item != null && item.slides != 'undefined' && item.slides.length > 0) { %>
+                        <div class="col-sm-12">
+                            <label>Table Image</label>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center" width="10%">#</th>
+                                    <th style="text-align: center" width="30%">Image</th>
+                                    <th style="text-align: center" width="30%">Image Name</th>
+                                    <th style="text-align: center" width="15%">Action</th>
+                                    <th style="text-align: center" width="15%">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% item.slides.forEach((ele, index) => { %>
+                                <tr>
+                                    <td><%=index + 1%></td>
+                                    <td style="text-align: center" ><img width="200px" style="height: 100px!important" src="<%=folderUpload +'/'+ ele%>" class="img-responsive" alt=""></td>
+                                    <td style="text-align: center"><%=ele%></td>
+                                    <td style="text-align: center">
+                                        <a href="<%=linkPrefix + 'deleteSlide/' + ele%>" class="btn btn-danger btn-xs btn-delete">Delete</a>
+                                    </td>
+                                    <td style="text-align: center">
+                                        <a href="<%=linkPrefix + 'dowloadSlide/' + ele%>" class="btn btn-success btn-xs">Dowload</a>
+                                    </td>
+                                </tr>
+                                <%})%>
+                                </tbody>
+                            </table>
+                        </div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

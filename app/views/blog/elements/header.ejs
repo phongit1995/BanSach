@@ -1,0 +1,58 @@
+<div class="header-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"><a data-toggle="tooltip" data-placement="bottom" title="Liên hệ đặt sách !"  href="https://www.facebook.com/ngankieu0905" class="web-url"><span class="pinterest"><i  class="fa fa-facebook-square fa-2x social-fb"></i></span></a></div>
+            <div class="col-md-6">
+                <h5>BỘ SÁCH LUYỆN THI CHINH PHỤC MỤC TIÊU 8,9,10</h5></div>
+            <div class="col-md-3">
+                <span class="ph-number">Hotline : 0976.480.387</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-menu">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" style="width: 200px; max-height: 24px; margin-top: -50px" href="/"><img src="/frontend/images/logo-temp.png" alt="logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="navbar-item ">
+                        <a href="/" class="nav-link">Trang Chủ</a>
+                    </li>
+
+                    <li class="navbar-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Chọn Loại Sách
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <%if ( typeof(categories) != 'undefined' && categories != null ) { %>
+                                <%categories.forEach((item) => { %>
+                                    <a class="dropdown-item" href="/the-loai/<%=item.slug + '/' + item.id%>"><%=item.name%></a>
+                                    <div class="dropdown-divider"></div>
+                                <%})%>
+                            <%}%>
+
+                        </div>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="/xem-sach-theo-mon" class="nav-link">Tổng Hợp</a>
+                    </li>
+                    <li class="navbar-item tai-lieu">
+                        <a href="/tai-lieu" class="nav-link ">Tài Liệu</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="/admin/auth/login" class="nav-link">Đăng Nhập</a>
+                    </li>
+
+                </ul>
+                <div class="form-inline my-2 my-lg-0" data-toggle="tooltip" data-placement="right" title="Enter to search !">
+                    <input id="searchBox" class="form-control mr-sm-2" type="search" placeholder="Search here..." aria-label="Search">
+                    <span class="fa fa-search"></span>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

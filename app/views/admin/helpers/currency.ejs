@@ -1,0 +1,5 @@
+
+<% Currency= (value) => {
+    value = value + '';
+    return value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") + `₫`;
+}%>

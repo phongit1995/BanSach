@@ -1,0 +1,7 @@
+
+<% imageHelper= (folderUpload, classname, imageName, defaultImg) => {
+    if(imageName == null) {
+        imageName = defaultImg;
+    }
+    return `<img class="img-responsive ${classname}" src="${folderUpload}${imageName}" alt="${imageName}">`;
+}%>

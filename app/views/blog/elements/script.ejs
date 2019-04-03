@@ -1,0 +1,44 @@
+<script type="text/javascript" src="/frontend/js/jquery.min.js"></script>
+<script type="text/javascript" src="/frontend/js/bootstrap.min.js"></script>
+<script  type="text/javascript" src="/frontend/js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="/frontend/js/custom.js"></script>
+<script src="/backend/js/sweetalert2.min.js"></script>
+<script src="/backend/js/showAlert.js"></script>
+<script>
+    var div = document.createElement('div');
+    div.className = 'fb-customerchat';
+    div.setAttribute('page_id', '214119596086494');
+    div.setAttribute('ref', 'b64:V2VsY29tZSBNZXNzYWdl');
+    document.body.appendChild(div);
+    window.fbMessengerPlugins = window.fbMessengerPlugins || {
+        init: function () {
+            FB.init({
+                appId            : '1678638095724206',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v3.0'
+            });
+        }, callable: []
+    };
+    window.fbAsyncInit = window.fbAsyncInit || function () {
+        window.fbMessengerPlugins.callable.forEach(function (item) { item(); });
+        window.fbMessengerPlugins.init();
+    };
+    setTimeout(function () {
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    }, 0);
+</script>
+<div class="fb-customerchat"
+     attribution=setup_tool
+     page_id="214119596086494"
+     logged_in_greeting="Chào bạn! Tôi có thể giúp gì bạn?"
+     logged_out_greeting="Chào bạn! Tôi có thể giúp gì bạn?">
+</div>
+

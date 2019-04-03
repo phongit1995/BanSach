@@ -1,0 +1,89 @@
+<%
+const folderUpload  = 'uploads/articles/';
+%>
+<div class="breadcrumb">
+    <div class="container">
+        <a class="breadcrumb-item" href="/">Trang Chủ</a>
+        <span class="breadcrumb-item active">Tổng Hợp</span>
+    </div>
+</div>
+<section class="static about-sec">
+    <div class="container">
+        <h2>Sách Mới Ra Mắt</h2>
+        <div class="recomended-sec">
+            <div class="row">
+                <%if(itemsSpecial.length > 0) { %>
+                    <% itemsSpecial.forEach((item) => { %>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="item" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !">
+                            <img height="300px" width="210px" src="<%=folderUpload + '/' + item.thumb%>" alt="img">
+                            <h5>
+                                <% include ./../../helpers/format_summary%>
+                                <%=formatSummary(item.name, 40)%>
+                            </h5>
+                            <h6>
+                            <span class="price">
+                                <% include ./../../../admin/helpers/currency%>
+                                <%=Currency(item.coverprice)%>
+                            </span> / <a href="/xem-sach/<%=item.slug + '/' + item.id%>">Đặt Sách</a>
+                                <% if(item.price < item.coverprice) { %>
+                                    <span class="sale">-<%=100 - Math.floor(item.price *100 / item.coverprice)%>%</span>
+                                <%}%>
+                            </h6>
+                            <div class="hover">
+                                <a href="/xem-sach/<%=item.slug + '/' + item.id%>">
+
+
+                                </a>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px" class="btn-sec">
+                            <a href="https://www.facebook.com/ngankieu0905">
+                                <button class="btn "><i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt Sách</button>
+                            </a>
+                        </div>
+                    </div>
+                    <% })%>
+                <%} else { %>
+                    <div class="alert alert-danger">Đang cập nhật cơ sở dữ liệu</div>
+                <%}%>
+            </div>
+        </div>
+        <% itemInCategories.forEach((items, index) => { %>
+            <h2><i class="fa fa-calendar-o"></i><%=categories[index].name%></h2>
+                <div class="recent-book-sec">
+                     <div class="row">
+                         <% if(items.length > 0) { %>
+                             <% items.forEach((item) => { %>
+                                 <div class="col-md-3">
+                                     <div class="item" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !">
+                                         <a href="/xem-sach/<%=item.slug + '/' + item.id%>">
+                                             <img style="height: 220px" src="<%=folderUpload + '/' + item.thumb%>" alt="<%=item.name%>">
+                                         </a>
+                                         <h3><a href="/xem-sach/<%=item.slug + '/' + item.id%>"><%=item.name%></a></h3>
+                                         <h6><span class="price">
+                                            <%=Currency(item.price)%>
+                                         </span> / <a href="https://www.facebook.com/ngankieu0905">Đặt Sách</a></h6>
+                                         <% if(item.price < item.coverprice) { %>
+                                            <span class="sale">-<%=100 - Math.floor(item.price *100 / item.coverprice)%>%</span>
+                                         <%}%>
+                                     </div>
+                                 </div>
+                             <%})%>
+                                 </div>
+                                    <div class="btn-sec">
+                                        <a href="/the-loai/<%=categories[index].slug + '/' + categories[index].id%>" class="btn gray-btn">load More books</a>
+                                    </div>
+                                </div>
+                         <%} else { %>
+                                   <div class="col-sm-12">
+                                       <div class="alert alert-danger">Đăng cập nhật cơ sở dữ liệu</div>
+                                   </div>
+                                </div>
+                            </div>
+                        <%}%>
+
+        <%})%>
+
+    </div>
+</section>

@@ -1,0 +1,17 @@
+
+<% 
+filterStatusHelper = (linkPrefix, statusFilter, keyword) => {
+    let xhtmlResource = '';
+    statusFilter.forEach((item, index)=>{
+    let link = linkPrefix +'status/' + item.value;
+    if(keyword !== "" && keyword !== undefined){
+        link += '?keyword=' + keyword;
+    }
+    xhtmlResource += `
+        <a class="btn m-b-sm btn-${item.class}  btn-sm" href="${link}">
+            ${item.name + " (" + item.count +")"}
+        </a>`;
+    })
+    return xhtmlResource;
+}
+%>

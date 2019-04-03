@@ -1,0 +1,64 @@
+
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+
+            <li class="sidebar-search">
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </li>
+            <li id="backHome">
+                    <a href="javascript:void(0)">
+                        <i class="fa fa-home"></i> Home Page
+                    </a>
+            </li>
+
+            <li>
+                <a href="/<%=systemConfig.prefixAdmin %>/dashboard" ><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+            </li>
+            <li >
+                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Book Management<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="/<%=systemConfig.prefixAdmin %>/category">Book Category</a>
+                    </li>
+                    <li>
+                        <a href="/<%=systemConfig.prefixAdmin %>/article">List Book</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li >
+                <a href="#"><i class="fa fa-edit fa-fw"></i>User Management<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="/<%=systemConfig.prefixAdmin %>/groups">User Category</a>
+                    </li>
+                    <li>
+                        <a href="/<%=systemConfig.prefixAdmin %>/users">List User</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="/<%=systemConfig.prefixAdmin %>/document" ><i class="fa fa-file-o"></i> Document Management</a>
+            </li>
+            <li>
+                <a href="/<%=systemConfig.prefixAdmin %>/website" ><i class="fa fa-wrench fa-fw"></i> Website UI Management</a>
+            </li>
+            <li>
+                  <a href="/<%=systemConfig.prefixAdmin %>/auth/logout">
+                        <i class="fa fa-sign-in"></i> Logout
+                   </a>
+            </li>
+
+        </ul>
+    </div>
+</div>

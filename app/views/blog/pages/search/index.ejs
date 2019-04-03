@@ -1,0 +1,111 @@
+<%
+const folderUpload  = './../../../uploads/articles/';
+%>
+<% include ./../../helpers/pagination%>
+<div class="breadcrumb">
+    <div class="container">
+        <a class="breadcrumb-item" href="/">Trang Chủ</a>
+        <span class="breadcrumb-item active">Tìm Kiếm</span>
+    </div>
+</div>
+<section class="static about-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <h2 class=" float-left">Từa Khoá : "<%=params.keyword%>"</h2>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-md-4 col-xs-12">
+                <span  class="result-search badge badge-info">Tìm Thấy: <%= params.pagination.totalItems%> Kết Qủa</span>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <form  class=" form-inline">
+                    <div class="col-sm-12">
+                        <div class="dataTables_length" id="dataTables-example_length">
+                            <label>Sắp xếp theo&nbsp;<select style="width: 180px"  name="change_sort_field_search" class="form-control input-sm">
+                                    <% sortField.forEach((item) => {%>
+                                        <% if(item.value == params.sortField) {%>
+                                        <option selected value="<%=item.value%>"><%=item.name%></option>
+                                        <%} else {%>
+                                        <option value="<%=item.value%>"><%=item.name%></option>
+                                        <%} %>
+
+                                    <%})%>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <form  class=" form-inline">
+                    <div class="col-sm-12">
+                        <div class="dataTables_length" id="dataTables-example_length">
+                            <label>Kiểu sắp xếp &nbsp;<select style="width: 180px" name="change_sort_type_search" class="form-control input-sm">
+                                    <% sortType.forEach((item) => {%>
+                                        <% if(item.value == params.sortType) {%>
+                                        <option selected value="<%=item.value%>"><%=item.name%></option>
+                                        <%} else {%>
+                                        <option value="<%=item.value%>"><%=item.name%></option>
+                                        <%} %>
+
+                                    <%})%>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div style="clear: both"></div>
+        <div class="recomended-sec">
+            <div class="row">
+                <%if(params.itemSearchResult.length > 0) { %>
+                <%params.itemSearchResult.forEach((item) => { %>
+                <div style="margin-bottom: 15px" class="col-lg-3 col-md-6">
+                    <div class="item" data-toggle="tooltip" data-placement="right" title="Click để đọc thử !">
+                        <img height="300px" width="210px" src="<%=folderUpload + '/' + item.thumb%>" alt="img">
+                        <h5>
+                            <% include ./../../helpers/format_summary%>
+                            <%=formatSummary(item.name, 40)%>
+                        </h5>
+                        <h6>
+                            <span class="price">
+                                <% include ./../../../admin/helpers/currency%>
+                                Giá Bán <%=Currency(item.coverprice)%>
+                            </span>
+                            <% if(item.price < item.coverprice) { %>
+                                <span class="sale">-<%=100 - Math.floor(item.price *100 / item.coverprice)%>%</span>
+                            <%}%>
+                        </h6>
+                        <div class="hover">
+                            <a href="/xem-sach/<%=item.slug+ '/' + item.id%>">
+
+                            </a>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px" class="btn-sec">
+                        <a href="https://www.facebook.com/ngankieu0905">
+                            <button class="btn "><i class="fa fa-shopping-cart" aria-hidden="true"></i> Đặt Sách</button>
+                        </a>
+                    </div>
+                </div>
+                <%})%>
+                <%} else { %>
+                    <div class="col-sm-12 alert alert-success ">Xin lỗi ! không có kết quả cho từ khoá "<%=params.keyword%>"</div>
+                <%}%>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center " >
+            <%- paginationHelper(params.pagination,``, '', '')%>
+        </div>
+
+    </div>
+    <div  class="center-block col-sm-12">
+
+    </div>
+
+</section>

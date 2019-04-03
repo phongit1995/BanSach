@@ -1,0 +1,89 @@
+<%
+    <!-- items | group | user -->
+    const colection = "users";
+    const linkPrefix = systemConfig.prefixAdmin + `/${colection}/`;
+    const folderUpload  = 'uploads/users/'; 
+%>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Form
+            </div>
+            <div class="panel-body">
+                <% include ./../../elements/errors%>
+                <%- %>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" action="<%= linkPrefix%>save" method="POST" enctype="multipart/form-data" name="form-upload">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input class="form-control" name="name" value="<%=item.name%>">
+                                </div>
+                                <div class="form-group">
+                                      <label>UserName</label>
+                                     <input class="form-control" name="username" value="<%=item.username%>">
+                                </div>
+                                <div class="form-group">
+                                      <label>Password</label>
+                                      <input class="form-control" name="password" value="<%=item.password%>">
+                                 </div>
+                                <div class="form-group">
+                                    <label>Avatar</label>
+                                    <input class="form-control" name="avatar" type="file">
+
+                                    <% include ./../../helpers/image%>
+                                    <%- imageHelper(folderUpload, 'img-avatar-form',item.avatar, 'no-avatar.png')%>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Ordering</label>
+                                    <input class="form-control" type="number" name="ordering" value="<%=item.ordering%>">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="novalue">Choose Status</option>
+                                        <option value="active" <%=(item.status=="active" ) ? 'selected="selected"' : '' %>
+                                        >Active</option>
+                                        <option value="inactive" <%=(item.status=="inactive" ) ? 'selected="selected"' : ''
+                                        %> >Inactive</option>
+                                    </select>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Group</label>
+                                    <% include ./../../helpers/select_box %>
+                                    <%- selectBoxHelper('group_id', groupItems, item.group_id)%>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Content</label>
+                                    <textarea name="content" id="editor1" rows="10" cols="80">
+                                        <%= item.content %>
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <input class="form-control" name="id" value="<%= item.id%>" type="hidden">
+                                <input class="form-control" name="imageOld" value="<%= item.avatar%>" type="hidden">
+                                <input class="form-control" name="group_name" value="<%=item.group_name%>" type="hidden">
+                                <button type="submit" class="btn btn-primary">Submit </button>
+                                <a type="button" href="<%= linkPrefix%>" class="btn btn-default">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    CKEDITOR.replace('editor1');
+</script>

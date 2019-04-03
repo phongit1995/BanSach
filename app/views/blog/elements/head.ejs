@@ -1,0 +1,25 @@
+<meta charset="UTF-8">
+<title> ĐVH Book Store [Đặng Việt Hùng] </title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#03a6f3">
+<meta http-equiv="content-language" content="vi" />
+<meta name="author" content="uetcodeteam">
+<meta name="revisit-after" content="days">
+<meta property="fb:app_id" content="364769327638869" />
+<meta property="fb:admins" content="100003825486619"/>
+<meta property="fb:admins" content="100007298223760"/>
+
+<%if(typeof itemSelectedView != 'undefined') {%>
+    <!--Facebook-->
+    <meta property="og:url" content="http://www.dvhbooks.com/tai-lieu/xem-tai-lieu/<%=itemSelectedView.id+'/'+itemSelectedView.slug%>" />
+    <meta property="og:title" content="<%=itemSelectedView.name%>" />
+    <meta property="og:image" content="http://www.dvhbooks.com/uploads/documents/<%=itemSelectedView.thumb%>">
+    <meta property="og:description" content="<%=itemSelectedView.name%>" />
+<%}%>
+<link rel="shortcut icon" href="/frontend/images/logoIcons.png">
+<link rel="stylesheet" href="/frontend/css/bootstrap.min.css">
+<link rel="stylesheet" href="/backend/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/frontend/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/frontend/css/styles.css">
+<script type="text/javascript" src="/frontend/js/popper.min.js"></script>
+
