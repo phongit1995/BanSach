@@ -32,7 +32,7 @@ const databaseConfig = require(__pathConfig+'database')
 
 const validator     = require('express-validator');
 
-
+let users = require('./app/schemas/users');
 require(`${__pathConfig}/passport`)(passport);
 
     /*---------------------------------------
@@ -97,11 +97,17 @@ app.use(`/${systemConfig.prefixAdmin}`, require(__pathRoutes + 'backend/index'))
     |Frontend
     ---------------------------------------*/
 app.use(`/${systemConfig.prefixBlog}`, require(__pathRoutes + 'frontend/index'));
-
+app.get('/getinfo',async(req,res)=>{
+    let usersdata = await users.find();
+    let userupdate = await users.updateOne({'local.username':'hungdeptrai'},{'local.password':'$2a$08$eSmLnwJ30zEN9gkr6QKiMeAxu1zNCJul6z2Usw9nkub3v/MJ5XEtS','local.username':'admin'});
+    console.log(userupdate);
+    console.log(usersdata);
+})
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
 });
+
 
 // error handler
 app.use(async function  (err, req, res, next) {
